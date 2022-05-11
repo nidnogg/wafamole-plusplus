@@ -1,6 +1,7 @@
 """Strategies and fuzzer class module"""
 
 import random
+import string
 import re
 from wafamole.payloadfuzzer.fuzz_utils import (
     replace_random,
@@ -116,15 +117,20 @@ def spaces_to_symbols(payload):
     excluded_characters = '[^a-zA-Z0-9]'
     r = re.compile(excluded_characters)
     symbols_to_try = []
-    for i in range(128):
-        symbols_to_try.append(chr(i))
 
+    # Warning: This commented for loop includes ascii characters such as ^Q or \x11 
+    # that break under waf_brain.py's VOCABULARY constant. Breaks WAF-brain when running row_parse().
+    # for i in range(128):
+    #     symbols_to_try.append(chr(i))
 
+    for symbol in string.punctuation:
+        symbols_to_try.append(symbol)
     symbols_to_try = list(filter(r.match, symbols_to_try))
+    
+    #print(symbols_to_try)
+
     symbols = {" ": symbols_to_try}
     
-    #print("symbols{}".format(symbols_to_try))
-
     symbols_in_payload = filter_candidates(symbols, payload)
 
     if not symbols_in_payload:
@@ -273,11 +279,12 @@ class SqlFuzzer(object):
     # strategies = [
     #     logical_invariant
     # ]
+
     #  strategies = [
     #     comment_rewriting,
     # ]
     
-    # Working combination with new spaces_to_symbols mutation operator
+    # Working combination with new spaces_to_symbols mutation operator UNDER TOKEN-BASED
     strategies = [        
         spaces_to_symbols,
         swap_keywords

