@@ -66,9 +66,13 @@ If you want to cite us, please use the following (BibTeX) reference:
 ## Setup
 
 On debian vbox (Python 3.9)
+
 `python3 setup.py build`
+
 `python3 setup.py install`
+
 `pip install -r requirements.txt`
+
 `pip install scikit-learn==0.21.3`
 
 ## Sample Usage
