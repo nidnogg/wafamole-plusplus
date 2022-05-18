@@ -2,7 +2,7 @@
 """
 from contextlib import redirect_stderr
 import os
-import numpy as np
+import numpy as np 
 from wafamole.models import Model
 from wafamole.exceptions.models_exceptions import (
     KerasInternalError,

@@ -1,10 +1,13 @@
+import shutup
 import click
 import pickle
+import warnings
+shutup.please()
 from wafamole.evasion import EvasionEngine
 from wafamole.evasion.random import RandomEvasionEngine
 from wafamole.exceptions.models_exceptions import UnknownModelError
 from wafamole.models import TokenClassifierWrapper, WafBrainWrapper, SQLiGoTWrapper
-
+shutup.jk()
 
 @click.group()
 def wafamole():
@@ -49,6 +52,7 @@ def evade(
     random_engine,
     output_path
 ):
+    
     if model_type == "token":
         model = TokenClassifierWrapper().load(model_path)
     elif model_type == "UU":

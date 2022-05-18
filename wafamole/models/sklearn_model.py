@@ -1,6 +1,8 @@
 """Wrapper for sci-kit learn classifiers.
 """
 import os
+import shutup
+shutup.please()
 import joblib
 import numpy as np
 from wafamole.models import Model
@@ -10,6 +12,7 @@ from wafamole.exceptions.models_exceptions import (
     ModelNotLoadedError,
 )
 from wafamole.utils.check import type_check, file_exists
+shutup.jk()
 
 
 class SklearnModelWrapper(Model):
