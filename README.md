@@ -73,6 +73,9 @@ If you want to cite us, please use the following (BibTeX) reference:
 
 `pip install -r requirements.txt`
 
+`pip install scikit-learn==0.21.1`
+
+
 If this doesn't work:
 
 `python setup.py build`
