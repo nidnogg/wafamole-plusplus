@@ -65,7 +65,31 @@ If you want to cite us, please use the following (BibTeX) reference:
 
 ## Setup
 
-On debian vbox (Python 3.9)
+* For Debian on WSL 2 (Miniconda Python 3.7)
+
+`python setup.py build`
+
+`python setup.py install`
+
+`pip install -r requirements.txt`
+
+`pip install scikit-learn==0.21.1`
+
+
+If this doesn't work:
+
+`python setup.py build`
+
+`python setup.py install`
+
+`pip install -r requirements.txt`
+
+`pip install cython`
+
+`pip install scikit-learn==0.21.3`
+
+
+* For Debian on Oracle VM VirtualBox 6.0.24 (Python 3.9)
 
 `python3 setup.py build`
 
