@@ -259,6 +259,11 @@ def swap_keywords(payload):
     # Apply mutation at one random occurrence in the payload
     return replace_random(payload, candidate_symbol, candidate_replacement)
 
+def shuffle_integers(payload):
+    # Shift numbers in payload  string to other values
+    # Try https://www.imperva.com/blog/database-attacks-sql-obfuscation/  for  hex   shifting mabye
+    return payload
+
 class SqlFuzzer(object):
     """SqlFuzzer class"""
 
