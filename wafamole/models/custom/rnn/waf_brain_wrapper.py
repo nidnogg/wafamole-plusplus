@@ -53,7 +53,7 @@ class WafBrainWrapper(KerasModelWrapper):
         #return 
         #print("process_payload - {} and typeOf such - {} END".formatprocess_payload(self._keras_classifier, "", [value])["score"])
         #return 0.7
-        print("outsidepayload{}".format(value))
+        #print("string about to be classified {}".format(value))
         malicious = process_payload(self._keras_classifier, "", [value])["score"]
         return malicious
 

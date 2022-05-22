@@ -15,6 +15,12 @@ class CoreEngine(object, metaclass=ABCMeta):
 		# This removes duplicate payloads
 		payloads = {fuzzer.fuzz() for _ in range(round_size)}
 		results = map(self._model.classify, payloads)
+
+		# # diag
+		# print("PRINT RESULTS var from CoreEngine, line 17")
+		# import code
+		# code.interact(local=locals())
+
 		confidence, payload = min(zip(results, payloads))
 		return confidence, payload
 

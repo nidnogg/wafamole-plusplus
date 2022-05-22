@@ -27,15 +27,15 @@ class EvasionEngine(CoreEngine):
         super(EvasionEngine, self).__init__(model)
 
     # def _mutation_round(self, payload, round_size):
-    #
+    
     #     fuzzer = SqlFuzzer(payload)
-    #
+    
     #     # Some mutations do not apply to some payloads
     #     # This removes duplicate payloads
     #     payloads = {fuzzer.fuzz() for _ in range(round_size)}
     #     results = map(self.model.classify, payloads)
     #     confidence, payload = min(zip(results, payloads))
-    #
+    
     #     return confidence, payload
 
     def evaluate(
@@ -85,14 +85,14 @@ class EvasionEngine(CoreEngine):
                     evaluation_results
                 ):
                     max_rounds -= 1
-                    print("Cur confidence {}\n Cur payload {}\n Rounds left{}\n".format(
-                            candidate_confidence, candidate_payload, max_rounds
-                            )
-                        )
             
                     confidence, payload = self._mutation_round(
                         candidate_payload, round_size
                     )
+                    print("Cur confidence {}\n Cur payload {}\n Rounds left {}\n".format(
+                            confidence, payload, max_rounds
+                            )
+                        )
                     if confidence < candidate_confidence:
                         evaluation_results.append((confidence, payload))
                         min_confidence, min_payload = min(evaluation_results)

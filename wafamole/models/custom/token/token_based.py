@@ -11,4 +11,6 @@ class TokenClassifierWrapper(SklearnModelWrapper):
         return feature_vector
 
     def classify(self, value):
+        #print("string about to be classified {}".format(value))
+
         return super(TokenClassifierWrapper, self).classify(value)[0, 1]

@@ -48,7 +48,8 @@ def logical_invariant(payload):
     :param payload:
     """
 
-    pos = re.search("(#|-- )", payload)
+    pos = re.search("(#| --)", payload)
+    # to-do: figure out why -- comments doesn't work 100%.
 
     if not pos:
         # No comments found
@@ -118,7 +119,7 @@ def spaces_to_symbols(payload):
     r = re.compile(excluded_characters)
     symbols_to_try = []
 
-    # Warning: This commented for loop includes ascii characters such as ^Q or \x11 
+    # Warning: This commented for loop includes ascii characters such as ^Q or \x11
     # that break under waf_brain.py's VOCABULARY constant. Breaks WAF-brain when running row_parse().
     # for i in range(128):
     #     symbols_to_try.append(chr(i))
@@ -126,17 +127,16 @@ def spaces_to_symbols(payload):
     for symbol in string.punctuation:
         symbols_to_try.append(symbol)
     symbols_to_try = list(filter(r.match, symbols_to_try))
-    
+
     #print(symbols_to_try)
 
     symbols = {" ": symbols_to_try}
-    
+
     symbols_in_payload = filter_candidates(symbols, payload)
 
     if not symbols_in_payload:
-        #quit()
-        return payload
-    
+            return payload
+
     print(symbols_in_payload)
 
     # Randomly choose symbol
@@ -260,13 +260,76 @@ def swap_keywords(payload):
     return replace_random(payload, candidate_symbol, candidate_replacement)
 
 def shuffle_integers(payload):
-    # Shift numbers in payload  string to other values
+    candidates = list(re.finditer(r'[0-9]', payload))
+
+    if not candidates:
+        return payload
+
+    candidate_pos = random.choice(candidates).span()
+
+    return payload[: candidate_pos[0]] + str(random.choice(range(10))) + payload[candidate_pos[1] :]
+
+# def shuffle_bases(payload):
+#   candidates = list(re.finditer(r'[0-9]+', payload))
+
+#   if not candidates:
+#     return payload
+#   candidate_pos = random.choice(candidates).span()
+#   candidate = payload[candidate_pos[0] : candidate_pos[1]]
+
+
+#   replacements = [
+#     bin(int(candidate)),
+#     int(candidate),
+#     oct(int(candidate)),
+#     hex(int(candidate)),
+#   ]
+
+#   replacement = random.choice(replacements)
+
+#   return payload[: candidate_pos[0]] + str(replacement) + payload[candidate_pos[1] :]
+
+
+def shuffle_integers(payload):
+    candidates = list(re.finditer(r'[0-9]', payload))
+
+    if not candidates:
+        return payload
+    candidate_pos = random.choice(candidates).span()
+
+    return payload[:candidate_pos[0]] + str(random.choice(range(10))) + payload[candidate_pos[1]:]
+
+def shuffle_bases(payload):
+    candidates = list(re.finditer(r'[0-9]+', payload))
+
+    if not candidates:
+        return payload
+    candidate_pos = random.choice(candidates).span()
+    candidate = payload[candidate_pos[0]:candidate_pos[1]]
+
+    replacements = [
+        bin(int(candidate)),
+        int(candidate),
+        oct(int(candidate)),
+        hex(int(candidate)),
+    ]
+
+    replacement = random.choice(replacements)
+
+    if (str(candidate) == str(replacement)):
+        return payload
+
+    return payload[:candidate_pos[0]] + str(replacement) + payload[candidate_pos[1]:]
+
+def hex_integers(payload):
     # Try https://www.imperva.com/blog/database-attacks-sql-obfuscation/  for  hex   shifting mabye
     return payload
 
 class SqlFuzzer(object):
     """SqlFuzzer class"""
 
+
+    # original mut ops
     # strategies = [
     #     spaces_to_comments,
     #     random_case,
@@ -288,11 +351,17 @@ class SqlFuzzer(object):
     #  strategies = [
     #     comment_rewriting,
     # ]
-    
+
     # Working combination with new spaces_to_symbols mutation operator UNDER TOKEN-BASED
-    strategies = [        
-        spaces_to_symbols,
-        swap_keywords
+    # strategies = [
+    #     spaces_to_symbols,
+    #     swap_keywords
+    # ]
+
+    strategies = [
+        shuffle_bases,
+        shuffle_integers,
+        swap_keywords        
     ]
 
     def __init__(self, payload):
