@@ -358,6 +358,7 @@ class SqlFuzzer(object):
     #     swap_keywords
     # ]
 
+    # First working strategies with new SVC model
     strategies = [
         shuffle_bases,
         shuffle_integers,

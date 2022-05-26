@@ -1,0 +1,9 @@
+numpy
+keras
+scikit-learn==0.21.3
+joblib
+sqlparse
+networkx
+click
+tensorflow
+shutup==0.2.0 
