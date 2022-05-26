@@ -4,3 +4,4 @@ from .keras_model import KerasModelWrapper
 from .custom.graph.graph_based import SQLiGoTWrapper
 from .custom.token.token_based import TokenClassifierWrapper
 from .custom.rnn.waf_brain_wrapper import WafBrainWrapper
+from .custom.svc.svc_based import SVCClassifierWrapper

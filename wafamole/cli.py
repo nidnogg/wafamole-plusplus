@@ -2,11 +2,13 @@ import shutup
 import click
 import pickle
 import warnings
+
+from wafamole.models.sklearn_model import SklearnModelWrapper
 shutup.please()
 from wafamole.evasion import EvasionEngine
 from wafamole.evasion.random import RandomEvasionEngine
 from wafamole.exceptions.models_exceptions import UnknownModelError
-from wafamole.models import TokenClassifierWrapper, WafBrainWrapper, SQLiGoTWrapper
+from wafamole.models import TokenClassifierWrapper, WafBrainWrapper, SQLiGoTWrapper, SVCClassifierWrapper
 shutup.jk()
 
 @click.group()
@@ -55,6 +57,8 @@ def evade(
     
     if model_type == "token":
         model = TokenClassifierWrapper().load(model_path)
+    elif model_type == "svc":
+        model = SVCClassifierWrapper().load(model_path)
     elif model_type == "UU":
         model = SQLiGoTWrapper(undirected=True, proportional=False).load(model_path)
     elif model_type == "UP":

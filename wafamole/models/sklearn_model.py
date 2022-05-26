@@ -5,6 +5,7 @@ import shutup
 shutup.please()
 import joblib
 import numpy as np
+from sklearn.svm import SVC
 from wafamole.models import Model
 from wafamole.exceptions.models_exceptions import (
     NotSklearnModelError,
@@ -81,7 +82,8 @@ class SklearnModelWrapper(Model):
         file_exists(filepath)
         try:
             self._sklearn_classifier = joblib.load(filepath)
-            # joblib.load(filepath) returns GaussianNB(priors=None, var_smoothing=1e-09)
+            print(self._sklearn_classifier)
+            # on Gaussian SVM, joblib.load(filepath) returns GaussianNB(priors=None, var_smoothing=1e-09) 
         except Exception as e:
             raise NotSklearnModelError("Error in loading model.") from e
         return self
