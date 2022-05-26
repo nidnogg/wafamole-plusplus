@@ -1,5 +1,5 @@
 # tcc - WAF fuzzer
-A course completion project for the Computer Science course administered by the Federal University of Rio de Janeiro.
+A final year project for the Computer Science course administered by the Federal University of Rio de Janeiro.
 
 Based off [WAF-A-MoLE](https://github.com/AvalZ/WAF-A-MoLE), a *guided mutation-based fuzzer* for ML-based Web Application Firewalls, inspired by AFL and based on the [FuzzingBook](https://www.fuzzingbook.org) by Andreas Zeller et al.
 
@@ -148,6 +148,7 @@ The classifiers we used are listed in the table below.
 | Classifier name| Algorithm
 | --- | --- |
 | [WafBrain](https://github.com/BBVA/waf-brain) | Recurrent Neural Network|
+| [ML-Based-WAF (modified)](https://github.com/vladan-stojnic/ML-based-WAF) | Non-Linear Support Vector Machine  |
 | Token-based | Naive Bayes |
 | Token-based | Random Forest |
 | Token-based | Linear SVM |
@@ -163,6 +164,14 @@ Bypass the pre-trained WAF-Brain classifier using a `admin' OR 1=1#` equivalent.
 
 ```bash
 wafamole evade --model-type waf-brain wafamole/models/custom/example_models/waf-brain.h5  "admin' OR 1=1#"
+```
+
+#### ML-Based-WAF (modified) - Non-Linear Support Vector Machine
+
+Bypass the pre-trained ML-Based-WAF classifier using a `admin' OR 1=1#` equivalent.
+
+```bash
+wafamole evade --model-type svc wafamole/models/custom/svc/svc_trained.dump  "admin' OR 1=1#"
 ```
 
 #### Token-based - Naive Bayes
