@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wafamole",
-    version="0.0.2",
-    author="Valenza, Demetrio",
-    author_email="[andrea.valenza | luca.demetrio]@dibris.unige.it",
+    version="0.5",
+    author="Valenza, Demetrio, Vermelho, Alencar",
+    author_email="[andrea.valenza | luca.demetrio]@dibris.unige.it, henriquevt98@gmail.com",
     description="Fuzzing ML-based WAFs for fun and profit",
     long_description=long_description,
     long_description_content_type="text/markdown",

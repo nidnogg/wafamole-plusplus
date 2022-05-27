@@ -11,6 +11,10 @@ pip install scikit-learn==0.21.3
 psudo pip install . &&
 wafamole evade --model-type svc wafamole/models/custom/svc/svc_trained.dump  "admin' OR 1=1#"
 
+(!) new model
+psudo pip install . &&
+wafamole evade --model-type svc wafamole/models/custom/svc/sgd_trained.dump  "admin' OR 1=1#"
+
 psudo pip install . &&
  wafamole evade --model-type waf-brain wafamole/models/custom/example_models/waf-brain.h5  "admin' OR 1=1#"
 
