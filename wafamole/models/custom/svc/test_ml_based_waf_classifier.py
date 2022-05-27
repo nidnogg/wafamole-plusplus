@@ -53,8 +53,10 @@ def trainModel(clfType):
     # For scikit 0.21.1
     if(clfType == "SVC"):
         # Support Vector Classification
-        #pipe = make_pipeline(TfidfVectorizer(input = 'content', lowercase = True, analyzer = 'char', max_features = 1024, ngram_range = (1, 2)), SVC(C = 10, kernel = 'rbf', probability=True, gamma='scale'))
-        pipe = make_pipeline(TfidfVectorizer(input = 'content', lowercase = True, analyzer = 'char', max_features = 1024, ngram_range = (1, 4)), SVC(C = 10, kernel = 'linear', probability=True, gamma='scale'))
+        pipe = make_pipeline(TfidfVectorizer(input = 'content', lowercase = True, analyzer = 'char', max_features = 1024, ngram_range = (1, 2)), SVC(C = 10, kernel = 'rbf', probability=True, gamma='scale'))
+        
+        # Alternate Linear SVC suggested by GridSearchCV. Note - Seems to peform worse than nonlinear kernel.
+        # pipe = make_pipeline(TfidfVectorizer(input = 'content', lowercase = True, analyzer = 'char', max_features = 1024, ngram_range = (1, 4)), SVC(C = 10, kernel = 'linear', probability=True, gamma='scale'))
 
     if(clfType == "SGD"):
         # Stochastic Gradient Descent Classifier
