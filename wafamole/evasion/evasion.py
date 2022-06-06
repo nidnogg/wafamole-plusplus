@@ -1,5 +1,6 @@
 """The main class of WAF-A-MoLE"""
 import signal
+import json
 
 from multiprocessing import Pool
 
@@ -111,5 +112,14 @@ class EvasionEngine(CoreEngine):
                 min_confidence, min_payload
             )
         )
+
+        # outputJsonRow = {}
+        # outputJsonRow["pattern"] = min_payload
+        # outputJsonRow["type"] = "sqli"
+        
+        # # WARNING: This jsonOutputFilePath only works if wafamole is executed from datasets/mole_query_generator.py
+        # jsonOutputFilePath = 'SQLiV3_mole.json'
+        # with open(jsonOutputFilePath, 'a') as jsonFile:
+        #     jsonFile.write(json.dumps(outputJsonRow, indent=4) + ',\n')
 
         return min_confidence, min_payload

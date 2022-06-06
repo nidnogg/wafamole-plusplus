@@ -342,6 +342,22 @@ class SqlFuzzer(object):
     #     reset_inline_comments,
     # ]
 
+    # all strategies
+    strategies = [
+        spaces_to_comments,
+        random_case,
+        swap_keywords,
+        swap_int_repr,
+        spaces_to_whitespaces_alternatives,
+        comment_rewriting,
+        change_tautologies,
+        logical_invariant,
+        reset_inline_comments,
+        spaces_to_symbols,
+        shuffle_bases,
+        shuffle_integers
+    ]
+
     # # suspiciously powerful mutation operators
 
     # strategies = [
@@ -359,11 +375,11 @@ class SqlFuzzer(object):
     # ]
 
     # First working strategies with new SVC model
-    strategies = [
-        shuffle_bases,
-        shuffle_integers,
-        swap_keywords        
-    ]
+    # strategies = [
+    #     shuffle_bases,
+    #     shuffle_integers,
+    #     swap_keywords        
+    # ]
 
     def __init__(self, payload):
         self.initial_payload = payload
@@ -371,10 +387,7 @@ class SqlFuzzer(object):
 
     def fuzz(self):
         strategy = random.choice(self.strategies)
-
         self.payload = strategy(self.payload)
-        # print(self.payload)
-
         return self.payload
 
     def current(self):

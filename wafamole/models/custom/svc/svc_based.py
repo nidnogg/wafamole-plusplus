@@ -12,7 +12,6 @@ from wafamole.exceptions.models_exceptions import (
 class SVCClassifierWrapper(SklearnModelWrapper):
     def extract_features(self, value: str):
         type_check(value, str, "value")
-        #feature_vector = np.fromstring(value, np.int8) - 48
         return value
 
     def classify(self, value):
