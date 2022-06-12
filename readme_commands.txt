@@ -10,6 +10,12 @@ pip install scikit-learn==0.21.3
 models for testing
 
 psudo pip install . &&
+wafamole evade --model-type svc wafamole/models/custom/svc/test_ada_classifier.dump  "admin' OR 1=1#"
+
+psudo pip install . &&
+wafamole evade --model-type svc wafamole/models/custom/svc/test_sgd_classifier.dump  "admin' OR 1=1#"
+
+psudo pip install . &&
 wafamole evade --model-type svc wafamole/models/custom/svc/test_svc_classifier_extra_moled.dump  "admin' OR 1=1#"
 
 psudo pip install . &&
