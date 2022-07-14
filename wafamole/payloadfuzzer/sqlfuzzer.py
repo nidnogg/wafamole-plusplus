@@ -137,7 +137,7 @@ def spaces_to_symbols(payload):
     if not symbols_in_payload:
             return payload
 
-    print(symbols_in_payload)
+    # print(symbols_in_payload)
 
     # Randomly choose symbol
     candidate_symbol = random.choice(symbols_in_payload)
@@ -147,7 +147,7 @@ def spaces_to_symbols(payload):
     candidate_replacement = random.choice(replacements)
 
     # Apply mutation at one random occurrence in the payload
-    print(replace_random(payload, candidate_symbol, candidate_replacement))
+    # print(replace_random(payload, candidate_symbol, candidate_replacement))
     return replace_random(payload, candidate_symbol, candidate_replacement)
 
 def spaces_to_whitespaces_alternatives(payload):
