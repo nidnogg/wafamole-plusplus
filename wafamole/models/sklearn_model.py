@@ -82,7 +82,7 @@ class SklearnModelWrapper(Model):
         file_exists(filepath)
         try:
             self._sklearn_classifier = joblib.load(filepath)
-            print(self._sklearn_classifier)
+            # print(self._sklearn_classifier)
             # on Gaussian SVM, joblib.load(filepath) returns GaussianNB(priors=None, var_smoothing=1e-09) 
         except Exception as e:
             raise NotSklearnModelError("Error in loading model.") from e

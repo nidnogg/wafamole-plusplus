@@ -1,5 +1,5 @@
 """Strategies and fuzzer class module"""
-
+import shutup; shutup.please()
 import random
 import string
 import re

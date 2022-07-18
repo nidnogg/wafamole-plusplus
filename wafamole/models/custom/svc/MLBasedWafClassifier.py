@@ -1,5 +1,4 @@
-import shutup
-shutup.please()
+import shutup; shutup.please()
 from sre_parse import Tokenizer
 import pandas as pd
 import numpy as np

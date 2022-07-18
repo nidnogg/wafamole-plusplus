@@ -28,10 +28,10 @@ def shuffle_bases(payload):
 def mutation_round():
     payload = "1234admin' or 1=1#"
     i = 0
-    print("starting with {}".format(payload))
+    # print("starting with {}".format(payload))
     while i < 20:
         payload = shuffle_bases(payload)
-        print(payload)
+        # print(payload)
         i += 1
 
 mutation_round()

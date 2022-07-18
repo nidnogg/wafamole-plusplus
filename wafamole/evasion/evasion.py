@@ -90,28 +90,34 @@ class EvasionEngine(CoreEngine):
                     confidence, payload = self._mutation_round(
                         candidate_payload, round_size
                     )
-                    print("Cur confidence {}\n Cur payload {}\n Rounds left {}\n".format(
-                            confidence, payload, max_rounds
-                            )
-                        )
+                    # print("Cur confidence {}\n Cur payload {}\n Rounds left {}\n".format(
+                    #         confidence, payload, max_rounds
+                    #         )
+                    #     )
                     if confidence < candidate_confidence:
                         evaluation_results.append((confidence, payload))
                         min_confidence, min_payload = min(evaluation_results)
                         break
 
             if min_confidence < threshold:
-                print("[+] Threshold reached")
+                # print("[+] Threshold reached")
+                pass # comment if reusing print
             elif max_rounds <= 0:
-                print("[!] Max number of iterations reached")
+                # print("[!] Max number of iterations reached")
+                print("max_iter ")
+                pass # comment if reusing print 
 
         except TimeoutError:
-            print("[!] Execution timed out")
+            # print("[!] Execution timed out")
+            print("timeout")
 
-        print(
-            "Reached confidence {}\nwith payload\n{}".format(
-                min_confidence, min_payload
-            )
-        )
+        # print(
+        #     "Reached confidence {}\nwith payload\n{}".format(
+        #         min_confidence, min_payload
+        #     )
+        # )
+
+        print("{:.6} {}".format(min_confidence, max_rounds))
 
         # outputJsonRow = {}
         # outputJsonRow["pattern"] = min_payload

@@ -79,7 +79,6 @@ def evade(
         for i in range(int(random_engine)):
             engine.evaluate(query_body, max_rounds, 1, timeout, threshold)
             random_results.append(engine.transformations)
-            print("Round {} done".format(i))
         if output_path is not None:
             with open(output_path, 'wb') as out_file:
                 pickle.dump(random_results, out_file)
