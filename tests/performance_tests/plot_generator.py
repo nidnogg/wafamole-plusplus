@@ -1,11 +1,14 @@
 import os
 import seaborn as sns
 import numpy as np
-from pandas import DataFrame
+import pandas as pd
 import matplotlib.pyplot as plt
 
 dirname = os.getcwd()
 
+
+max_runtimes = []
+min_runtimes = []
 for files in os.scandir(dirname):
     if(files.path.endswith('.txt')):
         input_filename = files.name
@@ -13,6 +16,10 @@ for files in os.scandir(dirname):
         results_with_runtime = []
 
         with open(input_filename, 'r') as input_file:
+            probs = []
+            rounds_total = []
+            runtimes_clean = []
+            max_iters = 0
             for line in input_file:
                 if('seconds' in line):
                     # print(line)
@@ -20,6 +27,7 @@ for files in os.scandir(dirname):
                     runtimes.append(runtime)
                     continue
                 if('max_iter' in line):
+                    max_iters += 1
                     continue
                 if('e-' in line):
                     sci_notation_num = line.split()[0]
@@ -29,9 +37,6 @@ for files in os.scandir(dirname):
                     results_with_runtime.append(line.split())
             
             i = 0
-            probs = []
-            rounds_total = []
-            runtimes_clean = []
             for runtime in runtimes:
                 results_with_runtime[i].append(runtime.replace('\n', ''))
                 prob = results_with_runtime[i][0]
@@ -40,7 +45,7 @@ for files in os.scandir(dirname):
                 rounds_total.append(rounds)
                 time = results_with_runtime[i][2]
                 runtimes_clean.append(time)
-                print('{} {} {}'.format(prob, rounds, time))
+                # print('{} {} {}'.format(prob, rounds, time))
                 i += 1
             # data = {
             #     "probabilities": probs,
@@ -48,16 +53,47 @@ for files in os.scandir(dirname):
             #     "runtimes": runtimes_clean
             #     }
             data = {
-                "runtimes": runtimes_clean
+                "runtimes": pd.to_numeric(runtimes_clean)
                 }
-            df = DataFrame(data)
-            bins = np.arange(min(df['runtimes']), max(df['runtimes'])+0.2, step=0.3)
-            ax = sns.distplot(df['runtimes'], 
-                color='red', kde=False, bins=bins, label='New')
-            plt.savefig('runtimes.png')
+            round_data = {
+                "rounds": pd.to_numeric(rounds_total)
+            }
+            df = pd.DataFrame(data)
+            rounds_df = pd.DataFrame(round_data)
+            print(input_filename)
+            max_runtime = df['runtimes'].max()
+            min_runtime = df['runtimes'].min()
+            mean_runtime = df['runtimes'].mean()
+            mean_rounds = rounds_df['rounds'].mean()
+            print(mean_rounds)
+            trimmed_filename = input_filename.replace('.txt', '')
+            max_runtimes.append({trimmed_filename: max_runtime})
+            min_runtimes.append({trimmed_filename: min_runtime})
+
+            # print(max_iters)
+            if(max_runtime <= 6):
+                bins = np.arange(min_runtime, max_runtime + 0.2, step=0.3)
+                ax = sns.displot(df['runtimes'], 
+                    color='orange', kde=False, bins=bins)
+                ax.set(title=trimmed_filename, xlabel='Runtimes in seconds', ylabel='Amount of runtimes')
+                plt.savefig('./plots/{}.png'.format(trimmed_filename), bbox_inches='tight')
+            else:
+                bins = np.arange(min_runtime, max_runtime + 3, step=6.0)
+                ax = sns.displot(df['runtimes'], 
+                    color='orange', kde=False, bins=bins, label='Runtimes')
+                ax.set(title=trimmed_filename, xlabel='Runtimes in seconds', ylabel='Amount of runtimes')
+                plt.savefig('./plots/{}.png'.format(trimmed_filename), bbox_inches='tight')
+
             
     else:
         continue
+
+# bins = np.arange(min_runtime, max_runtime + 0.2, step=0.3)
+#                 ax = sns.displot(df['runtimes'], 
+#                     color='orange', kde=False, bins=bins)
+#                 ax.set(xlabel='Runtimes in seconds', ylabel='Amount of runtimes')
+#                 plt.savefig('./plots/{}.png'.format(trimmed_filename))
+
 
 # d = {"country": ['UK','US','US','UK','PRC'],
 #        "age": [32, 37, 17, 34, 29],
