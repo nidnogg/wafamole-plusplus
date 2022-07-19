@@ -1,29 +1,21 @@
-# tcc - WAF fuzzer
+# tcc - wafamole++
 A final year project for the Computer Science course administered by the Federal University of Rio de Janeiro.
 
-Based off [WAF-A-MoLE](https://github.com/AvalZ/WAF-A-MoLE), a *guided mutation-based fuzzer* for ML-based Web Application Firewalls, inspired by AFL and based on the [FuzzingBook](https://www.fuzzingbook.org) by Andreas Zeller et al.
+Based off [WAF-A-MoLE](https://github.com/AvalZ/WAF-A-MoLE), a *guided mutation-based fuzzer* for ML-based Web Application Firewalls (WAFs), inspired by AFL and based on the [FuzzingBook](https://www.fuzzingbook.org) by Andreas Zeller et al.
 
-Given an input SQL injection query, it tries to produce a *semantic invariant* query that is able to bypass the target WAF.
-You can use this tool for assessing the robustness of your product by letting WAF-A-MoLE explore the solution space to find dangerous "blind spots" left uncovered by the target classifier.
+This CLI tool is intended for Machine Learning based WAFs that filter out SQL injections via classifiers. It generates adversarial examples from a base input SQL injection query (provided by the user) that are able to bypass a target WAF. 
+
+It can be used to assess and increment the robustness of your WAF - following the instructions for a adapting the custom Model class that wraps around the classifier of your WAF, generating such examples and retraining your classifiers with those.
 
 [![Python Version](https://img.shields.io/badge/Python-3.7-green.svg)](https://www.python.org/downloads/release/python-374/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AvalZ/WAF-A-MoLE/blob/master/LICENSE)
-[![Documentation Status](https://readthedocs.org/projects/waf-a-mole/badge/?version=latest)](https://waf-a-mole.readthedocs.io/en/latest/?badge=latest)
-
-# Architecture
-
-![WAF-A-MoLE Architecture](docs/fig/WAF-A-MoLE.png)
-
-WAF-A-MoLE takes an initial payload and inserts it in the payload **Pool**, which manages a priority queue ordered by the WAF confidence score over each payload.
-
-During each iteration, the head of the payload Pool is passed to the **Fuzzer**, where it gets randomly mutated, by applying one of the available mutation operators.
 
 
 ## Mutation operators
 
-Mutations operators are all *semantics-preserving* and they leverage the high expressive power of the SQL language (in this version, MySQL).
+All mutation operators are *semantics-preserving* and use the MySQL implementation of the SQL language.
 
-Below are the mutation operators available in the current version of WAF-A-MoLE.
+Below are the mutation operators available in the current version of wafamole++.
 
 | Mutation | Example |
 | --- | --- |
@@ -35,21 +27,8 @@ Below are the mutation operators available in the current version of WAF-A-MoLE.
 | Operator Swapping | `admin' OR 1=1#` ⇒ `admin' OR 1 LIKE 1#`|
 | Logical Invariant | `admin' OR 1=1#` ⇒ `admin' OR 1=1 AND 0<1#`|
 | Symbol Injection *(New!)* | `admin' OR 1=1#` ⇒ `admin'/OR}1=1#`|
-
-# How to cite us
-
-WAF-A-MoLE implements the methodology presented in ["WAF-A-MoLE: Evading Web Application Firewalls through Adversarial Machine Learning"](https://www.researchgate.net/publication/340917525_WAF-A-MoLE_Evading_Web_Application_Firewalls_through_Adversarial_Machine_Learning).
-
-If you want to cite us, please use the following (BibTeX) reference:
-```
-@inproceedings{demetrio20wafamole,
-  title={WAF-A-MoLE: evading web application firewalls through adversarial machine learning},
-  author={Demetrio, Luca and Valenza, Andrea and Costa, Gabriele and Lagorio, Giovanni},
-  booktitle={Proceedings of the 35th Annual ACM Symposium on Applied Computing},
-  pages={1745--1752},
-  year={2020}
-}
-```
+| Number Shuffling *(New!)* | `admin' OR 1=1#` ⇒ `admin' OR 2=1#`|
+| Base Shuffling *(New!)* | `admin' OR 1=1#` ⇒ `admin' OR 0x8b=1#`|
 
 # Running WAF-A-MoLE
 
@@ -245,35 +224,17 @@ engine = EvasionEngine(model)
 result = engine.evaluate(payload, max_rounds, round_size, timeout, threshold)
 ```
 
-# Benchmark
-
-We evaluated WAF-A-MoLE against all our example models.
-
-The plot below shows the time it took for WAF-A-MoLE to mutate the `admin' OR 1=1#` payload until it was accepted by each classifier as benign.
-
-On the *x* axis we have time (in seconds, logarithmic scale).
-On the *y* axis we have the *confidence* value, i.e., how sure a classifier is that a given payload is a SQL injection (in percentage).
-
-Notice that being "50% sure" that a payload is a SQL injection is equivalent to flipping a coin.
-This is the usual classification threshold: if the confidence is lower, the payload is classified as benign.
-
-![Benchmark over time](docs/fig/benchmark_over_time.png)
-
-Experiments were performed on [DigitalOcean *Standard* Droplets](https://www.digitalocean.com/products/droplets/).
-
 # Contribute
 
-Questions, bug reports and pull requests are welcome.
+As with WAF-A-MoLE, all questions, bug reports and pull requests are welcome.
 
-In particular, if you are interested in expanding this project, we look for the following contributions:
+To further expand upon this project, the following guidelines can be followed:
 
 1. New WAF adapters
 1. New mutation operators
 1. New search algorithms
 
-# Team
+# Authors
 
-* [Luca Demetrio](http://csec.it/people/luca_demetrio/) - [CSecLab](https://csec.it/), DIBRIS, University of Genova
-* [Andrea Valenza](https://avalz.it/) - [CSecLab](https://csec.it/), DIBRIS, University of Genova
-* [Gabriele Costa](https://www.imtlucca.it/it/gabriele.costa) - [SysMA](http://sysma.imtlucca.it/), IMT Lucca
-* [Giovanni Lagorio](https://csec.it/people/giovanni_lagorio/) - [CSecLab](https://csec.it/), DIBRIS, University of Genova
+* [Henrique Vermelho de Toledo](https://github.com/nidnogg) - [IC UFRJ](https://www.dcc.ufrj.br/) Instituto de Computação, Federal University of Rio de Janeiro
+* [Daigoro Alencar de Oliveira](https://github.com/Kraisto) - [IC UFRJ](https://www.dcc.ufrj.br/) Instituto de Computação, Federal University of Rio de Janeiro
