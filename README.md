@@ -30,21 +30,6 @@ Below are the mutation operators available in the current version of wafamole++.
 | Number Shuffling *(New!)* | `admin' OR 1=1#` ⇒ `admin' OR 2=1#`|
 | Base Shuffling *(New!)* | `admin' OR 1=1#` ⇒ `admin' OR 0x8b=1#`|
 
-
-# Credit to original authors
-
-If you want to cite [WAF-A-MoLE](https://github.com/AvalZ/WAF-A-MoLE) (the original implementation of this application), you can do so with the following BibTeX reference:
-
-```
-@inproceedings{demetrio20wafamole,
-  title={WAF-A-MoLE: evading web application firewalls through adversarial machine learning},
-  author={Demetrio, Luca and Valenza, Andrea and Costa, Gabriele and Lagorio, Giovanni},
-  booktitle={Proceedings of the 35th Annual ACM Symposium on Applied Computing},
-  pages={1745--1752},
-  year={2020}
-}
-```
-
 # Running WAF-A-MoLE
 
 ## Prerequisites
@@ -239,35 +224,17 @@ engine = EvasionEngine(model)
 result = engine.evaluate(payload, max_rounds, round_size, timeout, threshold)
 ```
 
-# Benchmark
-
-We evaluated WAF-A-MoLE against all our example models.
-
-The plot below shows the time it took for WAF-A-MoLE to mutate the `admin' OR 1=1#` payload until it was accepted by each classifier as benign.
-
-On the *x* axis we have time (in seconds, logarithmic scale).
-On the *y* axis we have the *confidence* value, i.e., how sure a classifier is that a given payload is a SQL injection (in percentage).
-
-Notice that being "50% sure" that a payload is a SQL injection is equivalent to flipping a coin.
-This is the usual classification threshold: if the confidence is lower, the payload is classified as benign.
-
-![Benchmark over time](docs/fig/benchmark_over_time.png)
-
-Experiments were performed on [DigitalOcean *Standard* Droplets](https://www.digitalocean.com/products/droplets/).
-
 # Contribute
 
-Questions, bug reports and pull requests are welcome.
+As with WAF-A-MoLE, all questions, bug reports and pull requests are welcome.
 
-In particular, if you are interested in expanding this project, we look for the following contributions:
+To further expand upon this project, the following guidelines can be followed:
 
 1. New WAF adapters
 1. New mutation operators
 1. New search algorithms
 
-# Team
+# Authors
 
-* [Luca Demetrio](http://csec.it/people/luca_demetrio/) - [CSecLab](https://csec.it/), DIBRIS, University of Genova
-* [Andrea Valenza](https://avalz.it/) - [CSecLab](https://csec.it/), DIBRIS, University of Genova
-* [Gabriele Costa](https://www.imtlucca.it/it/gabriele.costa) - [SysMA](http://sysma.imtlucca.it/), IMT Lucca
-* [Giovanni Lagorio](https://csec.it/people/giovanni_lagorio/) - [CSecLab](https://csec.it/), DIBRIS, University of Genova
+* [Henrique Vermelho de Toledo](https://github.com/nidnogg) - [IC UFRJ](https://www.dcc.ufrj.br/) Instituto de Computação, Federal University of Rio de Janeiro
+* [Daigoro Alencar de Oliveira](https://github.com/Kraisto) - [IC UFRJ](https://www.dcc.ufrj.br/) Instituto de Computação, Federal University of Rio de Janeiro
