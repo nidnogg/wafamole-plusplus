@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 dirname = os.getcwd()
 
 
-max_runtimes = []
-min_runtimes = []
+# max_runtimes = []
+min_max_runtimes = []
 for files in os.scandir(dirname):
     if(files.path.endswith('.txt')):
         input_filename = files.name
@@ -65,10 +65,9 @@ for files in os.scandir(dirname):
             min_runtime = df['runtimes'].min()
             mean_runtime = df['runtimes'].mean()
             mean_rounds = rounds_df['rounds'].mean()
-            print(mean_rounds)
+            # print(mean_rounds)
             trimmed_filename = input_filename.replace('.txt', '')
-            max_runtimes.append({trimmed_filename: max_runtime})
-            min_runtimes.append({trimmed_filename: min_runtime})
+            min_max_runtimes.append([trimmed_filename, [pd.to_numeric(min_runtime), pd.to_numeric(max_runtime)]])
 
             # print(max_iters)
             if(max_runtime <= 6):
@@ -87,6 +86,19 @@ for files in os.scandir(dirname):
             
     else:
         continue
+
+# print(min_max_runtimes)
+plt.clf()
+df = pd.DataFrame(min_max_runtimes)
+df.rename(columns = {0 : 'classifiers', 1 : 'min_max'}, inplace=True)
+df = df.explode('min_max')
+print(df)
+ax = sns.boxplot(data=df, x='classifiers', y='min_max')
+ax.set(title='Overview of Min Max runtimes', xlabel='Classifiers', ylabel='Minimum and Maximum runtimes')
+# plt.legend(loc='lower right',title='Classifiers')
+plt.savefig('./plots/min_max_runtimes.png', bbox_inches='tight')
+plt.close()
+
 
 # bins = np.arange(min_runtime, max_runtime + 0.2, step=0.3)
 #                 ax = sns.displot(df['runtimes'], 
