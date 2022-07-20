@@ -9,6 +9,7 @@ dirname = os.getcwd()
 
 # max_runtimes = []
 min_max_runtimes = []
+runtimes_global = pd.DataFrame()
 for files in os.scandir(dirname):
     if(files.path.endswith('.txt')):
         input_filename = files.name
@@ -58,15 +59,22 @@ for files in os.scandir(dirname):
             round_data = {
                 "rounds": pd.to_numeric(rounds_total)
             }
+
+            trimmed_filename = input_filename.replace('.txt', '')
             df = pd.DataFrame(data)
             rounds_df = pd.DataFrame(round_data)
+
             print(input_filename)
+            print(df)
+
+            df['model'] = [trimmed_filename] * df.shape[0]
+            runtimes_global = pd.concat([runtimes_global, df], ignore_index=True)
+
             max_runtime = df['runtimes'].max()
             min_runtime = df['runtimes'].min()
             mean_runtime = df['runtimes'].mean()
             mean_rounds = rounds_df['rounds'].mean()
             # print(mean_rounds)
-            trimmed_filename = input_filename.replace('.txt', '')
             min_max_runtimes.append([trimmed_filename, [pd.to_numeric(min_runtime), pd.to_numeric(max_runtime)]])
 
             # print(max_iters)
@@ -83,20 +91,20 @@ for files in os.scandir(dirname):
                 ax.set(title=trimmed_filename, xlabel='Runtimes in seconds', ylabel='Amount of runtimes')
                 plt.savefig('./plots/{}.png'.format(trimmed_filename), bbox_inches='tight')
 
-            
     else:
         continue
 
 # print(min_max_runtimes)
 plt.clf()
-df = pd.DataFrame(min_max_runtimes)
-df.rename(columns = {0 : 'classifiers', 1 : 'min_max'}, inplace=True)
-df = df.explode('min_max')
-print(df)
-ax = sns.boxplot(data=df, x='classifiers', y='min_max')
+
+# df.rename(columns = {0 : 'classifiers', 1 : 'min_max'}, inplace=True)
+# df = df.explode('min_max')
+print(runtimes_global)
+runtimes_global.to_csv('./pedrinx.csv')
+ax = sns.boxplot(data=runtimes_global, x='runtimes', y='model')
 ax.set(title='Overview of Min Max runtimes', xlabel='Classifiers', ylabel='Minimum and Maximum runtimes')
 # plt.legend(loc='lower right',title='Classifiers')
-plt.savefig('./plots/min_max_runtimes.png', bbox_inches='tight')
+plt.savefig('./plots/min_max_runtimes.png')
 plt.close()
 
 
