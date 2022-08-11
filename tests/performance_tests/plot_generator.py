@@ -104,7 +104,7 @@ runtimes_global.to_csv('./pedrinx.csv')
 ax = sns.boxplot(data=runtimes_global, x='runtimes', y='model')
 ax.set(title='Overview of Min Max runtimes', xlabel='Classifiers', ylabel='Minimum and Maximum runtimes')
 # plt.legend(loc='lower right',title='Classifiers')
-plt.savefig('./plots/min_max_runtimes.png')
+plt.savefig('./plots/min_max_runtimes.png', bbox_inches='tight')
 plt.close()
 
 

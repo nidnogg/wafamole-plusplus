@@ -11,6 +11,14 @@ It can be used to assess and increment the robustness of your WAF - following th
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AvalZ/WAF-A-MoLE/blob/master/LICENSE)
 
 
+## Dataset training and Model creation
+
+If you'd like to train your own dataset for use in wafamole++, you can use this Google Colab [notebook](https://colab.research.google.com/drive/1YPHb8lrbxN6RjJWjwvM1upvsVoV7de8r?usp=sharing) as a reference. This contains all the code used to generate the `.dump` files used in this tool as models.
+
+The original WAF-A-MoLE [dataset](https://github.com/zangobot/wafamole_dataset), available on [GitHub](https://github.com/zangobot/wafamole_dataset) was used to train several of the new example models, as well as the [SQLiV3.json](https://www.kaggle.com/datasets/syedsaqlainhussain/sql-injection-dataset?select=SQLiV3.csv) SQL Injection Dataset from [Kaggle](https://www.kaggle.com/).
+
+
+
 ## Mutation operators
 
 All mutation operators are *semantics-preserving* and use the MySQL implementation of the SQL language.
@@ -52,10 +60,10 @@ Below are the mutation operators available in the current version of wafamole++.
 
 `pip install -r requirements.txt`
 
-`pip install scikit-learn==0.21.1`
+`pip install scikit-learn==0.21.1` 
 
 
-If this doesn't work:
+If this doesn't work, installing `cython` and a newer version of `scikit-learn` can fix the issue:
 
 `python setup.py build`
 
@@ -121,8 +129,8 @@ Options:
 
 ### Evading example models
 
-We provide some pre-trained models you can have fun with, located in [wafamole/models/custom/example_models](https://github.com/AvalZ/waf-a-mole/tree/master/wafamole/models/custom/example_models).
-The classifiers we used are listed in the table below.
+There are several example models provided, located in `wafamole/models/custom/example_models`.
+The classifiers used are listed in the table below.
 
 | Classifier name| Algorithm
 | --- | --- |
@@ -184,20 +192,6 @@ Bypass the pre-trained token-based Gaussian SVM classifier using a `admin' OR 1=
 ```bash
 wafamole evade --model-type token wafamole/models/custom/example_models/gauss_svm_trained.dump  "admin' OR 1=1#"
 ```
-
-#### SQLiGoT
-
-Bypass the pre-trained SQLiGOT classifier using a `admin' OR 1=1#` equivalent.
-Use **DP**, **UP**, **DU**, or **UU** for (respectivly) Directed Proportional, Undirected Proportional, Directed Unproportional and Undirected Unproportional.
-
-```bash
-wafamole evade --model-type DP wafamole/models/custom/example_models/graph_directed_proportional_sqligot "admin' OR 1=1#"
-```
-
-**BEFORE LAUNCHING EVALUATION ON SQLiGoT**
-
-These classifiers are more robust than the others, as the feature extraction phase produces vectors with a more complex structure, and all pre-trained classifiers have been strongly regularized.
-It may take hours for some variants to produce a payload that achieves evasion (see Benchmark section).
 
 ### Custom adapters
 
