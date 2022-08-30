@@ -1,5 +1,4 @@
-# tcc - wafamole++
-A final year project for the Computer Science course administered by the Federal University of Rio de Janeiro.
+# wafamole++
 
 Based off [WAF-A-MoLE](https://github.com/AvalZ/WAF-A-MoLE), a *guided mutation-based fuzzer* for ML-based Web Application Firewalls (WAFs), inspired by AFL and based on the [FuzzingBook](https://www.fuzzingbook.org) by Andreas Zeller et al.
 
@@ -13,7 +12,7 @@ It can be used to assess and increment the robustness of your WAF - following th
 
 ## Dataset training and Model creation
 
-If you'd like to train your own dataset for use in wafamole++, you can use this Google Colab [notebook](https://colab.research.google.com/drive/1YPHb8lrbxN6RjJWjwvM1upvsVoV7de8r?usp=sharing) as a reference. This contains all the code used to generate the `.dump` files used in this tool as models.
+If you'd like to train your own dataset for use in wafamole++, you can use this Google Colab [notebook](https://colab.research.google.com/drive/1YPHb8lrbxN6RjJWjwvM1upvsVoV7de8r?usp=sharing) as a reference. This contains all the code used to generate the `.dump` files used in this tool as models, with the exception of the `.json` datasets to be used in training.
 
 The original WAF-A-MoLE [dataset](https://github.com/zangobot/wafamole_dataset), available on [GitHub](https://github.com/zangobot/wafamole_dataset) was used to train several of the new example models, as well as the [SQLiV3.json](https://www.kaggle.com/datasets/syedsaqlainhussain/sql-injection-dataset?select=SQLiV3.csv) SQL Injection Dataset from [Kaggle](https://www.kaggle.com/).
 
