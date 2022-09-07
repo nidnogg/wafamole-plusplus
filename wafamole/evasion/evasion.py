@@ -100,25 +100,26 @@ class EvasionEngine(CoreEngine):
                         break
 
             if min_confidence < threshold:
-                # print("[+] Threshold reached")
+                print("[+] Threshold reached")
                 pass # comment if reusing print
             elif max_rounds <= 0:
-                # print("[!] Max number of iterations reached")
-                print("max_iter ")
+                print("[!] Max number of iterations reached")
+                # print("max_iter ")
                 pass # comment if reusing print 
 
         except TimeoutError:
-            # print("[!] Execution timed out")
-            print("timeout")
+            print("[!] Execution timed out")
+            # print("timeout")
 
-        # print(
-        #     "Reached confidence {}\nwith payload\n{}".format(
-        #         min_confidence, min_payload
-        #     )
-        # )
+        print(
+            "Reached confidence {}\nwith payload\n{}".format(
+                min_confidence, min_payload
+            )
+        )
 
-        print("{:.6} {}".format(min_confidence, max_rounds))
-
+        # Test print for mole_generator
+        # print("{:.6} {}".format(min_confidence, max_rounds))
+#       
         # outputJsonRow = {}
         # outputJsonRow["pattern"] = min_payload
         # outputJsonRow["type"] = "sqli"

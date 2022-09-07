@@ -269,27 +269,6 @@ def shuffle_integers(payload):
 
     return payload[: candidate_pos[0]] + str(random.choice(range(10))) + payload[candidate_pos[1] :]
 
-# def shuffle_bases(payload):
-#   candidates = list(re.finditer(r'[0-9]+', payload))
-
-#   if not candidates:
-#     return payload
-#   candidate_pos = random.choice(candidates).span()
-#   candidate = payload[candidate_pos[0] : candidate_pos[1]]
-
-
-#   replacements = [
-#     bin(int(candidate)),
-#     int(candidate),
-#     oct(int(candidate)),
-#     hex(int(candidate)),
-#   ]
-
-#   replacement = random.choice(replacements)
-
-#   return payload[: candidate_pos[0]] + str(replacement) + payload[candidate_pos[1] :]
-
-
 def shuffle_integers(payload):
     candidates = list(re.finditer(r'[0-9]', payload))
 
@@ -322,7 +301,6 @@ def shuffle_bases(payload):
     return payload[:candidate_pos[0]] + str(replacement) + payload[candidate_pos[1]:]
 
 def hex_integers(payload):
-    # Try https://www.imperva.com/blog/database-attacks-sql-obfuscation/  for  hex   shifting mabye
     return payload
 
 class SqlFuzzer(object):
