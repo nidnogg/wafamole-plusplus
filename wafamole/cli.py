@@ -1,9 +1,7 @@
 import shutup
 import click
 import pickle
-import warnings
 
-from wafamole.models.sklearn_model import SklearnModelWrapper
 shutup.please()
 from wafamole.evasion import EvasionEngine
 from wafamole.evasion.random import RandomEvasionEngine

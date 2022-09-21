@@ -33,9 +33,9 @@ Below are the mutation operators available in the current version of wafamole++.
 | Integer Encoding | `admin' OR 1=1#` ⇒ `admin' OR 0x1=(SELECT 1)#`|
 | Operator Swapping | `admin' OR 1=1#` ⇒ `admin' OR 1 LIKE 1#`|
 | Logical Invariant | `admin' OR 1=1#` ⇒ `admin' OR 1=1 AND 0<1#`|
-| Symbol Injection *(New!)* | `admin' OR 1=1#` ⇒ `admin'/OR}1=1#`|
 | Number Shuffling *(New!)* | `admin' OR 1=1#` ⇒ `admin' OR 2=1#`|
 | Base Shuffling *(New!)* | `admin' OR 1=1#` ⇒ `admin' OR 0x8b=1#`|
+| Symbol Injection *(New!)* | `admin' OR 1=1#` ⇒ `admin'/OR}1=1#`|
 
 # Running WAF-A-MoLE
 

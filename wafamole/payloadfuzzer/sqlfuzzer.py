@@ -264,16 +264,6 @@ def shuffle_integers(payload):
 
     if not candidates:
         return payload
-
-    candidate_pos = random.choice(candidates).span()
-
-    return payload[: candidate_pos[0]] + str(random.choice(range(10))) + payload[candidate_pos[1] :]
-
-def shuffle_integers(payload):
-    candidates = list(re.finditer(r'[0-9]', payload))
-
-    if not candidates:
-        return payload
     candidate_pos = random.choice(candidates).span()
 
     return payload[:candidate_pos[0]] + str(random.choice(range(10))) + payload[candidate_pos[1]:]
@@ -299,10 +289,6 @@ def shuffle_bases(payload):
         return payload
 
     return payload[:candidate_pos[0]] + str(replacement) + payload[candidate_pos[1]:]
-
-def hex_integers(payload):
-    return payload
-
 class SqlFuzzer(object):
     """SqlFuzzer class"""
 

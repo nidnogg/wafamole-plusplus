@@ -1,9 +1,6 @@
-import numpy as np
-from wafamole.tokenizer import Tokenizer
 from wafamole.models import SklearnModelWrapper
 from wafamole.utils.check import type_check
 from wafamole.exceptions.models_exceptions import (
-    NotSklearnModelError,
     SklearnInternalError,
     ModelNotLoadedError,
 )
